@@ -1,7 +1,4 @@
 import pygame
-import sys
-
-from GameField import GameField
 
 
 class Drawing:
