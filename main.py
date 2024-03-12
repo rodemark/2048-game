@@ -3,7 +3,7 @@ from GameField import GameField
 
 
 def main():
-    gameField = GameField()
+    gameField = GameField(4)
     gameField.spawn_tile()
     gameField.spawn_tile()
     drawer = Drawing(gameField)

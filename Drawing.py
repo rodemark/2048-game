@@ -1,3 +1,6 @@
+import sys
+import webbrowser
+
 import pygame
 
 
@@ -29,11 +32,11 @@ class Drawing:
                         center=(j * (self.tile_size + self.margin) + self.tile_size / 2 + self.margin,
                                 i * (self.tile_size + self.margin) + self.tile_size / 2 + self.margin))
                     self.screen.blit(text, text_rect)
-
         pygame.display.flip()
 
     def run_game(self):
         running = True
+        mods = pygame.key.get_mods()
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -47,12 +50,21 @@ class Drawing:
                         self.game_field.move_left()
                     elif event.key == pygame.K_RIGHT:
                         self.game_field.move_right()
+                    elif event.key == pygame.K_q and mods & pygame.KMOD_CTRL:
+                        pygame.quit()
+                        sys.exit()
+                    elif event.key == pygame.K_h and mods & pygame.KMOD_CTRL:
+                        webbrowser.open("https://github.com/rodemark/2048-game/blob/master/README.md")
+
                     if self.game_field.is_game_over():
                         print("Game Over!")
+
+
                 self.draw()
                 self.clock.tick(10)
 
         pygame.quit()
+
 
 TILE_COLORS = {
     2: (238, 228, 218),

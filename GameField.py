@@ -2,7 +2,7 @@ import random
 
 
 class GameField:
-    def __init__(self, size=4):
+    def __init__(self, size: int):
         self.size = size
         self.grid = [[0] * size for _ in range(size)]
 
@@ -18,7 +18,7 @@ class GameField:
         if self.grid[rnd_x][rnd_y] == 0:
             self.grid[rnd_x][rnd_y] = new_number
 
-    def _move(self, direction):
+    def __move(self, direction):
         moved = False
         for i in range(self.size):
             if direction in ("left", "right"):
@@ -54,19 +54,19 @@ class GameField:
         return moved
 
     def move_up(self):
-        if self._move("up"):
+        if self.__move("up"):
             self.spawn_tile()
 
     def move_down(self):
-        if self._move("down"):
+        if self.__move("down"):
             self.spawn_tile()
 
     def move_left(self):
-        if self._move("left"):
+        if self.__move("left"):
             self.spawn_tile()
 
     def move_right(self):
-        if self._move("right"):
+        if self.__move("right"):
             self.spawn_tile()
 
     def is_game_over(self):
