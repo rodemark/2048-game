@@ -10,8 +10,9 @@ class Drawing:
         self.game_field = game_field
         self.tile_size = 100
         self.margin = 10
+        self.extra_height = 30
         self.screen_size = (self.game_field.size * (self.tile_size + self.margin) + self.margin,
-                            self.game_field.size * (self.tile_size + self.margin) + self.margin)
+                            self.game_field.size * (self.tile_size + self.margin) + self.margin + self.extra_height)
         self.screen = pygame.display.set_mode(self.screen_size)
         pygame.display.set_caption('2048 Game')
         self.clock = pygame.time.Clock()
@@ -32,11 +33,16 @@ class Drawing:
                         center=(j * (self.tile_size + self.margin) + self.tile_size / 2 + self.margin,
                                 i * (self.tile_size + self.margin) + self.tile_size / 2 + self.margin))
                     self.screen.blit(text, text_rect)
+
+        bottom_font = pygame.font.SysFont('Arial', 20)
+        bottom_text = bottom_font.render("Press Q to exit, H for help", True, (255, 255, 255))
+        bottom_text_rect = bottom_text.get_rect(bottomleft=(self.margin, self.screen_size[1] - self.margin))
+        bottom_text_rect.centerx = self.screen.get_rect().centerx
+        self.screen.blit(bottom_text, bottom_text_rect)
         pygame.display.flip()
 
     def run_game(self):
         running = True
-        mods = pygame.key.get_mods()
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -50,15 +56,13 @@ class Drawing:
                         self.game_field.move_left()
                     elif event.key == pygame.K_RIGHT:
                         self.game_field.move_right()
-                    elif event.key == pygame.K_q and mods & pygame.KMOD_CTRL:
+                    elif event.key == pygame.K_q:
                         pygame.quit()
                         sys.exit()
-                    elif event.key == pygame.K_h and mods & pygame.KMOD_CTRL:
-                        webbrowser.open("https://github.com/rodemark/2048-game/blob/master/README.md")
-
+                    elif event.key == pygame.K_h:
+                        webbrowser.open("https://github.com/rodemark/2048-game/blob/master/README.MD")
                     if self.game_field.is_game_over():
                         print("Game Over!")
-
 
                 self.draw()
                 self.clock.tick(10)
